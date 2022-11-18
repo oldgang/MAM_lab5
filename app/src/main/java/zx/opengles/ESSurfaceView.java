@@ -34,21 +34,23 @@ class ESSurfaceView extends GLSurfaceView
     	return renderer;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        float x = e.getX();
-        float y = e.getY();
-        if (e.getAction() == MotionEvent.ACTION_MOVE) {
-            float dx = x - previousX;
-            float dy = y - previousY;
 
-            renderer.setMotion(dx, dy);
-            requestRender();
-        }
-
-        previousX = x;
-        previousY = y;
-        return true;
-    }
+    //zadanie 3. lab5
+//    @SuppressLint("ClickableViewAccessibility")
+//    @Override
+//    public boolean onTouchEvent(MotionEvent e) {
+//        float x = e.getX();
+//        float y = e.getY();
+//        if (e.getAction() == MotionEvent.ACTION_MOVE) {
+//            float dx = x - previousX;
+//            float dy = y - previousY;
+//
+//            renderer.setMotion(dx, dy);
+//            requestRender();
+//        }
+//
+//        previousX = x;
+//        previousY = y;
+//        return true;
+//    }
 }

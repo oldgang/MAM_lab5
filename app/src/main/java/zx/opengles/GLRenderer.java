@@ -71,6 +71,12 @@ public class GLRenderer implements GLSurfaceView.Renderer
     private float radius = 3.0f;
     private float x, y, z = 0f;
 
+    int lightColorLoc;
+    int lightPosLoc;
+
+    public float[] lightColor = {1.0f, 1.0f, 1.0f, 1.0f};
+    public float[] lightPos = {0.0f, 2.0f, 1.0f};
+
     public GLRenderer()
     {
         camera = new float[]{0.f, 0.f, 1.5f, // pozycja obserwatora
@@ -151,29 +157,38 @@ public class GLRenderer implements GLSurfaceView.Renderer
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0); // Wykorzystanie tekstury o indeksie 0.
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, crateTextureDataHandle); // Podpięcie tekstury skrzyni.
         GLES20.glUniform1i(texShaders._diffuseTextureHandle, 0); // Przekazanie shaderom indeksu tekstury (0).
+
+
+        // ustaw kolor światła na pomarańczowy
+        lightColorLoc = GLES20.glGetUniformLocation(texShaders.programHandle, "lightColour");
+        GLES20.glUniform4f(lightColorLoc, lightColor[0], lightColor[1], lightColor[2], lightColor[3]);
+
+        lightPosLoc = GLES20.glGetUniformLocation(texShaders.programHandle, "lightPosition");
+        GLES20.glUniform3f(lightPosLoc, lightPos[0], lightPos[1], lightPos[2]);
+
         Matrix.setIdentityM(modelMatrix, 0); // Zresetowanie pozycji modelu.
         Matrix.translateM(modelMatrix, 0, -2.0f, -1.0f, -3.0f); // Przesunięcie modelu.
 
-        // Zadanie 1.
-        Matrix.rotateM(modelMatrix, 0, angle, 1f, 1f, 0f);
-        if(angle > 360f)
-            angle = 0f;
-        else
-            angle += 0.5f;
+        // Zadanie 1. lab5
+//        Matrix.rotateM(modelMatrix, 0, angle, 1f, 1f, 0f);
+//        if(angle > 360f)
+//            angle = 0f;
+//        else
+//            angle += 0.5f;
 
         drawShape(texturedCubeMesh.getPositionBuffer(), null, texturedCubeMesh.getNormalBuffer(), texturedCubeMesh.getTexCoordsBuffer(),
                     texShaders, texturedCubeMesh.getNumberOfVertices());
 
-        // Zadanie 2.
-        GLES20.glUseProgram(texShaders.programHandle); // Użycie shaderów korzystających z teksturowania.
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE1); // Wykorzystanie tekstury o indeksie 1.
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, crateTextureDataHandle2); // Podpięcie tekstury skrzyni.
-        GLES20.glUniform1i(texShaders._diffuseTextureHandle, 1); // Przekazanie shaderom indeksu tekstury (1).
-        Matrix.setIdentityM(modelMatrix, 0); // Zresetowanie pozycji modelu.
-        Matrix.translateM(modelMatrix, 0, 2f, -1.0f, -3.0f); // Przesunięcie modelu..
-
-        drawShape(texturedTriangleMesh.getPositionBuffer(), null, texturedTriangleMesh.getNormalBuffer(), texturedTriangleMesh.getTexCoordsBuffer(),
-                texShaders, texturedTriangleMesh.getNumberOfVertices());
+        // Zadanie 2. lab5
+//        GLES20.glUseProgram(texShaders.programHandle); // Użycie shaderów korzystających z teksturowania.
+//        GLES20.glActiveTexture(GLES20.GL_TEXTURE1); // Wykorzystanie tekstury o indeksie 1.
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, crateTextureDataHandle2); // Podpięcie tekstury skrzyni.
+//        GLES20.glUniform1i(texShaders._diffuseTextureHandle, 1); // Przekazanie shaderom indeksu tekstury (1).
+//        Matrix.setIdentityM(modelMatrix, 0); // Zresetowanie pozycji modelu.
+//        Matrix.translateM(modelMatrix, 0, 2f, -1.0f, -3.0f); // Przesunięcie modelu..
+//
+//        drawShape(texturedTriangleMesh.getPositionBuffer(), null, texturedTriangleMesh.getNormalBuffer(), texturedTriangleMesh.getTexCoordsBuffer(),
+//                texShaders, texturedTriangleMesh.getNumberOfVertices());
     }
 
     protected void drawShape(final FloatBuffer positionBuffer, final FloatBuffer colourBuffer, final FloatBuffer normalBuffer, final FloatBuffer texCoordsBuffer,
@@ -264,15 +279,16 @@ public class GLRenderer implements GLSurfaceView.Renderer
         return textureHandle[0];
     }
 
-    public synchronized void setMotion(float xDistance, float yDistance) {
-
-        cumulativeX += xDistance;
-        cumulativeY += yDistance;
-
-        Matrix.setLookAtM(viewMatrix, 0, camera[0], camera[1], camera[2], camera[3], camera[4], camera[5], camera[6], camera[7], camera[8]);
-
-        Matrix.rotateM(viewMatrix, 0, -cumulativeX * 0.1f, 0, 1, 0);
-        Matrix.rotateM(viewMatrix, 0, -cumulativeY * 0.1f, 1, 0, 0);
-
-    }
+    //zadanie 3. lab5
+//    public synchronized void setMotion(float xDistance, float yDistance) {
+//
+//        cumulativeX += xDistance;
+//        cumulativeY += yDistance;
+//
+//        Matrix.setLookAtM(viewMatrix, 0, camera[0], camera[1], camera[2], camera[3], camera[4], camera[5], camera[6], camera[7], camera[8]);
+//
+//        Matrix.rotateM(viewMatrix, 0, -cumulativeX * 0.1f, 0, 1, 0);
+//        Matrix.rotateM(viewMatrix, 0, -cumulativeY * 0.1f, 1, 0, 0);
+//
+//    }
 }
